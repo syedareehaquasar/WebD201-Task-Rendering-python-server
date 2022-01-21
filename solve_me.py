@@ -123,11 +123,38 @@ $ python tasks.py runserver # Starts the tasks management server"""
         for n, item in enumerate(self.completed_items):
             print(f'{str(n + 1)}. {item}')
 
+    def tableStyle(self):
+        return """
+        <!DOCTYPE html>
+        <html>
+        <body style="background-color:#E6E6FA;">
+        <style>
+            table {
+              border: 1px solid #DA70D6;
+              width: 100%;
+              padding: 15px;
+            }
+
+            th, td {
+              text-align: left;
+              padding: 8px;
+            }
+
+            tr:nth-child(even){background-color: #f2f2f2}
+            tr:nth-child(odd){background-color: white}
+
+            th {
+              background-color: #DA70D6;
+              color: white;
+            }
+        </style>
+        """
 
     def render_pending_tasks(self):
         self.read_current()
         table_header = """
         <table>
+        <caption><h2>Pending Tasks</h2></caption>
             <tr>
                 <th>Sr. No.</th>
                 <th>Task</th>
@@ -138,18 +165,19 @@ $ python tasks.py runserver # Starts the tasks management server"""
         for n, (key, value) in enumerate(self.current_items.items()):
             table_rows += f"""
             <tr>
-                <th>{n + 1}</th>
+                <td><b>{n + 1}</b></td>
                 <td>{value}</td>
                 <td>{key}</td>
             </tr>
             """
-        return table_header + table_rows + "</table>"
+        return self.tableStyle() + table_header + table_rows + "</table> </body> </html>"
 
 
     def render_completed_tasks(self):
         self.read_completed()
         table_header = """
         <table>
+        <caption><h2>Completed Tasks</h2></caption>
             <tr>
                 <th>Index</th>
                 <th>Task</th>
@@ -159,11 +187,11 @@ $ python tasks.py runserver # Starts the tasks management server"""
         for n, item in enumerate(self.completed_items):
             table_rows += f"""
             <tr>
-                <th>{n + 1}</th>
+                <td><b>{n + 1}</b></td>
                 <td>{item}</td>
             </tr>
             """
-        return table_header + table_rows + "</table>"
+        return self.tableStyle() + table_header + table_rows + "</table> </body> </html>"
 
 
 class TasksServer(TasksCommand, BaseHTTPRequestHandler):
