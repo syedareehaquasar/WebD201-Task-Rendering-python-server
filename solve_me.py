@@ -127,7 +127,6 @@ $ python tasks.py runserver # Starts the tasks management server"""
         return """
         <!DOCTYPE html>
         <html>
-        <body style="background-color:#E6E6FA;">
         <style>
             table {
               border: 1px solid #DA70D6;
@@ -148,6 +147,7 @@ $ python tasks.py runserver # Starts the tasks management server"""
               color: white;
             }
         </style>
+        <body style="background-color:#E6E6FA;">
         """
 
     def render_pending_tasks(self):
